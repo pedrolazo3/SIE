@@ -2,6 +2,7 @@ package service;
 
 import repository.EmpleadoRepository;
 import static service.HorarioService.datosHorario;
+import model.Empleado;
 
 public class EmpleadoService {
 
@@ -77,5 +78,29 @@ public class EmpleadoService {
 
         return maxCorrelativo + 1;
     }
-
+    
+     public int obtenerSiguienteIdEmpleado() {
+        int mayorIdEmpleado=Integer.parseInt(datosEmpleado[0][0]);
+        for (String[] fila : datosEmpleado) {
+            if(mayorIdEmpleado< Integer.parseInt(fila[0].toString())){
+                mayorIdEmpleado=Integer.parseInt(fila[0].toString());
+            } 
+        }
+        return mayorIdEmpleado + 1;
+    }
+     
+    public void registrarEmpleado(Empleado empleado ){        
+        String[][] nuevaMatriz = new String[datosEmpleado.length + 1][5];        
+        for(int i = 0; i < datosEmpleado.length; i++) {
+            nuevaMatriz[i] = datosEmpleado[i];
+        }
+        nuevaMatriz[nuevaMatriz.length - 1] = new String[]{
+            String.valueOf(empleado.getIdEmpleado()), 
+            empleado.getCodigo(), 
+            empleado.getNombre(), 
+            empleado.getApellido(), 
+            String.valueOf(empleado.getIdHorario())};
+        
+        datosEmpleado = nuevaMatriz;
+    }
 }

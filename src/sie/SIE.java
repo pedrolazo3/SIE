@@ -7,6 +7,7 @@ import repository.EmpleadoRepository;
 import repository.HorarioRepository;
 import service.EmpleadoService;
 import service.HorarioService;
+import model.Empleado;
 
 public class SIE {
 
@@ -16,6 +17,8 @@ public class SIE {
 
     public static void main(String[] args) {
         menuPrincipal();
+       
+        
     }
     public static void menuPrincipal(){
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
@@ -75,7 +78,7 @@ public class SIE {
                 case 1 -> {
                     MenuConsola.info("Registrando empleado...");
                     // TODO: lógica de registro
-                    MenuConsola.exito("Empleado registrado.");
+                    registrarEmpleado();                    
                 }
                 case 2 -> {
                     MenuConsola.info("Editando empleado...");
@@ -89,7 +92,7 @@ public class SIE {
                 }
                 case 4 -> {
                     MenuConsola.info("Mostrando reporte de empleados...");
-                    // TODO: lógica de reporte
+                    empleadoService.mostrarEmpleados();
                 }
                 case 0 -> {
                     MenuConsola.info("Regresando al menu principal...");
@@ -163,6 +166,16 @@ public class SIE {
 
         String codigo = empleadoService.generarCodigoEmpleado(nombre, apellido);
         System.out.println("Codigo autogenerado: " + codigo);
+        
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(empleadoService.obtenerSiguienteIdEmpleado());
+        empleado.setNombre(nombre);
+        empleado.setApellido(apellido);
+        empleado.setCodigo(codigo);
+        empleado.setIdHorario(idHorario);
+        empleadoService.registrarEmpleado(empleado);
+        MenuConsola.exito("Empleado registrado.");
+        empleadoService.mostrarEmpleados();
     }
     public static void registrarIngreso(){
         //Pedir codigo de empleado y luego mostrar la hora  actual

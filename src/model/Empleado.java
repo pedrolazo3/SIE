@@ -15,7 +15,9 @@ public class Empleado {
         this.apellido = apellido;
         this.idHorario = idHorario;
     }
-
+    public Empleado(){
+        
+    }
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
