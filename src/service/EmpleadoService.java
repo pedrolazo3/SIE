@@ -1,0 +1,81 @@
+package service;
+
+import repository.EmpleadoRepository;
+import static service.HorarioService.datosHorario;
+
+public class EmpleadoService {
+
+    EmpleadoRepository empleadosRepo = new EmpleadoRepository();
+    String[][] datosEmpleado = empleadosRepo.cargarEmpleados();
+
+    public void mostrarEmpleados() {
+         
+        System.out.printf("%s %17s %17s %25s \n","Codigo","Nombre","Apellido","Horario");
+        for (String[] fila : datosEmpleado) {
+            String horarioNombre = obtenerNombreHorario(fila[4]);
+            System.out.printf("%s %12s %25s %18s", fila[1], fila[2],
+                    fila[3], horarioNombre);
+            System.out.println("");
+        }
+    }
+
+    public String obtenerNombreHorario(String idHorario) {
+        for (String[] fila : datosHorario) {
+            if (fila[0].equalsIgnoreCase(idHorario)) {
+                return fila[1];
+            }
+        }
+        return "xx";
+    }
+
+    public String generarCodigoEmpleado(String nombre, String apellido) {
+        String prefijo = obtenerPrefijo(nombre, apellido);   // "JUME"
+        int correlativo = obtenerSiguienteCorrelativo(datosEmpleado, prefijo);
+        return prefijo + String.format("%02d", correlativo);  // "JUME03"
+    }
+
+    private String obtenerPrefijo(String nombre, String apellido) {
+        return primerLetra(nombre.toLowerCase()) + primerApellido(apellido.toLowerCase());   // "JUME"
+    }
+
+    private String primerLetra(String texto) {
+        if (texto.isEmpty()) {
+            return "XX";
+        }
+        if (texto.length() == 1) {
+            return texto + "X";
+        }
+        return texto.substring(0, 1);
+    }
+
+    private String primerApellido(String texto) {
+        if (texto == null || texto.trim().isEmpty()) {
+            return "XX";
+        }
+        return texto.trim().split("\\s+")[0];
+    }
+
+    public int obtenerSiguienteCorrelativo(String[][] datosEmpleado, String prefijo) {
+        int maxCorrelativo = 0;
+
+        for (String[] fila : datosEmpleado) {
+            String codigo = fila[1].toLowerCase();   // columna 1 = codigo
+
+            if (codigo != null && codigo.startsWith(prefijo)) {
+                // Extrae los 2 dígitos finales: "jume02" -> "02"
+                String numeros = codigo.substring(prefijo.length());
+                try {
+                    int correlativo = Integer.parseInt(numeros);
+                    if (correlativo > maxCorrelativo) {
+                        maxCorrelativo = correlativo;
+                    }
+                } catch (NumberFormatException e) {
+                    // Si el código no termina en número, lo ignoramos
+                }
+            }
+        }
+
+        return maxCorrelativo + 1;
+    }
+
+}
