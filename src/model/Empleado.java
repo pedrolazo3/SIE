@@ -7,17 +7,32 @@ public class Empleado {
     private String nombre;
     private String apellido;
     private int idHorario;
+    private boolean idEstado;
 
-    public Empleado(int idEmpleado, String codigo, String nombre, String apellido,int idHorario) {
+    public Empleado(int idEmpleado, String codigo, 
+            String nombre, String apellido,int idHorario
+            ,boolean idEstado) {
         this.idEmpleado = idEmpleado;
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.idHorario = idHorario;
+        this.idEstado=idEstado;
     }
     public Empleado(){
         
     }
+
+    public void setIdEstado(boolean idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public boolean getIdEstado() {
+        return idEstado;
+    }
+
+    
+    
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }

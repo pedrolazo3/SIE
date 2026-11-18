@@ -3,6 +3,7 @@ package service;
 import repository.EmpleadoRepository;
 import static service.HorarioService.datosHorario;
 import model.Empleado;
+import sie.MenuConsola;
 
 public class EmpleadoService {
 
@@ -11,12 +12,30 @@ public class EmpleadoService {
 
     public void mostrarEmpleados() {
          
-        System.out.printf("%s %17s %17s %25s \n","Codigo","Nombre","Apellido","Horario");
+        System.out.printf("%s %17s %17s %25s %12s\n"
+                ,"Codigo","Nombre","Apellido","Horario","Estado");
         for (String[] fila : datosEmpleado) {
             String horarioNombre = obtenerNombreHorario(fila[4]);
-            System.out.printf("%s %12s %25s %18s", fila[1], fila[2],
-                    fila[3], horarioNombre);
+            String estado = fila[5]=="1" ?"Activo":"Inactivo";
+            System.out.printf("%s %12s %25s %18s %12s", fila[1], fila[2],
+                    fila[3], horarioNombre,estado);
             System.out.println("");
+        }
+    }
+    
+       public void mostrarEmpleadosActivos() {
+         
+        System.out.printf("%s %17s %17s %25s %12s\n"
+                ,"Codigo","Nombre","Apellido","Horario","Estado");
+        for (String[] fila : datosEmpleado) {
+            if(fila[5]=="1"){
+                String horarioNombre = obtenerNombreHorario(fila[4]);
+            String estado = "Activo";
+            System.out.printf("%s %12s %25s %18s %12s", fila[1], fila[2],
+                    fila[3], horarioNombre,estado);
+            System.out.println("");
+            }
+            
         }
     }
 

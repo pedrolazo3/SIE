@@ -50,7 +50,23 @@ public class MenuConsola {
             }
         }
     }
-
+    
+    public static int leerOpcionHorario(java.util.Scanner sc) {
+        while (true) {
+            System.out.print(BOLD + PURPLE + "➤ Seleccione una opción: " + RESET);
+            String entrada = sc.nextLine().trim();
+            try {
+                int opcion = Integer.parseInt(entrada);
+                if (opcion >= 1 && opcion <= 2) {
+                    return opcion;
+                }
+                System.out.println(RED + "✖ Opción fuera de rango. Intente de nuevo." + RESET);
+            } catch (NumberFormatException e) {
+                System.out.println(RED + "✖ Debe ingresar un número." + RESET);
+            }
+        }
+    }
+    
 
     private static String centrar(String texto, int ancho) {
         if (texto.length() >= ancho) {

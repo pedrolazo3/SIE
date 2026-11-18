@@ -17,15 +17,14 @@ public class SIE {
 
     public static void main(String[] args) {
         menuPrincipal();
-       
-        
     }
-    public static void menuPrincipal(){
+
+    public static void menuPrincipal() {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
         int opcion;
-        
+
         do {
             MenuConsola.imprimirMenu();
             opcion = MenuConsola.leerOpcion(sc);
@@ -43,7 +42,7 @@ public class SIE {
                     // TODO: lógica de ingreso
                 }
                 case 3 -> {
-                    MenuConsola.info("Registrando ingreso...");                    
+                    MenuConsola.info("Registrando ingreso...");
                     // TODO: lógica de ingreso
                 }
                 case 4 -> {
@@ -54,22 +53,22 @@ public class SIE {
                     MenuConsola.info("Mostrando reporte por empleado...");
                     // TODO: lógica de reporte
                 }
-                case 0 -> MenuConsola.info("Saliendo del sistema...");
+                case 0 ->
+                    MenuConsola.info("Saliendo del sistema...");
             }
-
             if (opcion != 0) {
                 MenuConsola.pausar(sc);
             }
         } while (opcion != 0);
-
         sc.close();
     }
-    public static void menuEmpleado(){
+
+    public static void menuEmpleado() {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
         int opcion;
-        
+
         do {
             MenuConsola.imprimirMenuEmpleado();
             opcion = MenuConsola.leerOpcion(sc);
@@ -78,7 +77,7 @@ public class SIE {
                 case 1 -> {
                     MenuConsola.info("Registrando empleado...");
                     // TODO: lógica de registro
-                    registrarEmpleado();                    
+                    registrarEmpleado();
                 }
                 case 2 -> {
                     MenuConsola.info("Editando empleado...");
@@ -107,12 +106,13 @@ public class SIE {
 
         sc.close();
     }
-    public static void menuHorario(){
+
+    public static void menuHorario() {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
         int opcion;
-        
+
         do {
             MenuConsola.imprimirMenuHorario();
             opcion = MenuConsola.leerOpcion(sc);
@@ -134,7 +134,8 @@ public class SIE {
                     MenuConsola.exito("horario eliminado.");
                 }
                 case 4 -> {
-                    MenuConsola.info("Mostrando reporte de horario...");
+                    MenuConsola.info("Mostrando reporte de horario...");                    
+                    horarioService.mostrarHorarios();   
                     // TODO: lógica de reporte
                 }
                 case 0 -> {
@@ -150,7 +151,7 @@ public class SIE {
 
         sc.close();
     }
-    
+
     public static void registrarEmpleado() {
         System.out.println("Ingrese nombre : ");
         String nombre = sc.nextLine();
@@ -158,15 +159,14 @@ public class SIE {
         System.out.println("Ingrese apellido : ");
         String apellido = sc.nextLine();
 
-        System.out.println("\n Horarios disponibles: \n");
-        horarioService.mostrarHorarios();
-
-        System.out.println("Ingrese codigo de horario : ");
-        int idHorario = sc.nextInt();
+        int idHorario = mostrarHorarios();
 
         String codigo = empleadoService.generarCodigoEmpleado(nombre, apellido);
-        System.out.println("Codigo autogenerado: " + codigo);
-        
+        //System.out.println("Codigo autogenerado: " + codigo);
+        MenuConsola.info("Codigo autogenerado: "+ codigo);  
+                
+
+
         Empleado empleado = new Empleado();
         empleado.setIdEmpleado(empleadoService.obtenerSiguienteIdEmpleado());
         empleado.setNombre(nombre);
@@ -177,12 +177,26 @@ public class SIE {
         MenuConsola.exito("Empleado registrado.");
         empleadoService.mostrarEmpleados();
     }
-    public static void registrarIngreso(){
+    
+    
+    public static int mostrarHorarios() {
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));        
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+
+        MenuConsola.info("Mostrando horarios disponibles...");                    
+        horarioService.mostrarHorarios();        
+        opcion = MenuConsola.leerOpcionHorario(sc);
+        return opcion;
+    }
+
+    public static void registrarIngreso() {
         //Pedir codigo de empleado y luego mostrar la hora  actual
         //finalmente pedir confirmar para registrar ingreso.
     }
-    public static void registrarSalida(){
+
+    public static void registrarSalida() {
         //Pedir codigo de empleado y luego mostrar la hora  actual
         //finalmente pedir confirmar para registrar salida.
-    }   
+    }
 }
