@@ -7,11 +7,11 @@ public class Empleado {
     private String nombre;
     private String apellido;
     private int idHorario;
-    private boolean idEstado;
+    private String idEstado;
 
     public Empleado(int idEmpleado, String codigo, 
             String nombre, String apellido,int idHorario
-            ,boolean idEstado) {
+            ,String idEstado) {
         this.idEmpleado = idEmpleado;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -23,11 +23,11 @@ public class Empleado {
         
     }
 
-    public void setIdEstado(boolean idEstado) {
+    public void setIdEstado(String idEstado) {
         this.idEstado = idEstado;
     }
 
-    public boolean getIdEstado() {
+    public String getIdEstado() {
         return idEstado;
     }
 

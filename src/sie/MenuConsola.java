@@ -23,8 +23,8 @@ public class MenuConsola {
         System.out.println(lineaArriba);
         System.out.println(BOLD + CYAN + "║" + centrar("SISTEMA DE CONTROL DE EMPLEADOS", ancho-9) + "║" + RESET);
         System.out.println(separador);
-        System.out.println(BOLD + CYAN + "║" + RESET + " " + GREEN + "[1]" + RESET + "  Menu empleados" + " ".repeat(ancho - 33) + BOLD + CYAN + "║" + RESET);
-        System.out.println(BOLD + CYAN + "║" + RESET + " " + GREEN + "[2]" + RESET + "  Menu horarios" + " ".repeat(ancho - 33) + BOLD + CYAN + "║" + RESET);
+        System.out.println(BOLD + CYAN + "║" + RESET + " " + GREEN + "[1]" + RESET + "  Menu empleados" + " ".repeat(ancho - 29) + BOLD + CYAN + "║" + RESET);
+        System.out.println(BOLD + CYAN + "║" + RESET + " " + GREEN + "[2]" + RESET + "  Menu horarios" + " ".repeat(ancho - 28) + BOLD + CYAN + "║" + RESET);
         System.out.println(BOLD + CYAN + "║" + RESET + " " + YELLOW + "[3]" + RESET + "  Registrar ingreso" + " ".repeat(ancho - 32) + BOLD + CYAN + "║" + RESET);
         System.out.println(BOLD + CYAN + "║" + RESET + " " + YELLOW + "[4]" + RESET + "  Registrar salida" + " ".repeat(ancho - 31) + BOLD + CYAN + "║" + RESET);
         System.out.println(BOLD + CYAN + "║" + RESET + " " + BLUE + "[5]" + RESET + "  Ver reporte por empleado" + " ".repeat(ancho - 39) + BOLD + CYAN + "║" + RESET);
@@ -41,7 +41,7 @@ public class MenuConsola {
             String entrada = sc.nextLine().trim();
             try {
                 int opcion = Integer.parseInt(entrada);
-                if (opcion >= 0 && opcion <= 4) {
+                if (opcion >= 0 && opcion <= 5) {
                     return opcion;
                 }
                 System.out.println(RED + "✖ Opción fuera de rango. Intente de nuevo." + RESET);

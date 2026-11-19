@@ -11,31 +11,31 @@ public class EmpleadoService {
     String[][] datosEmpleado = empleadosRepo.cargarEmpleados();
 
     public void mostrarEmpleados() {
-         
-        System.out.printf("%s %17s %17s %25s %12s\n"
-                ,"Codigo","Nombre","Apellido","Horario","Estado");
+
+        System.out.printf("%s %17s %17s %25s %12s\n",
+                "Codigo", "Nombre", "Apellido", "Horario", "Estado");
         for (String[] fila : datosEmpleado) {
             String horarioNombre = obtenerNombreHorario(fila[4]);
-            String estado = fila[5]=="1" ?"Activo":"Inactivo";
+            String estado = fila[5] == "1" ? "Activo" : "Inactivo";
             System.out.printf("%s %12s %25s %18s %12s", fila[1], fila[2],
-                    fila[3], horarioNombre,estado);
+                    fila[3], horarioNombre, estado);
             System.out.println("");
         }
     }
-    
-       public void mostrarEmpleadosActivos() {
-         
-        System.out.printf("%s %17s %17s %25s %12s\n"
-                ,"Codigo","Nombre","Apellido","Horario","Estado");
+
+    public void mostrarEmpleadosActivos() {
+
+        System.out.printf("%s %17s %17s %25s %12s\n",
+                "Codigo", "Nombre", "Apellido", "Horario", "Estado");
         for (String[] fila : datosEmpleado) {
-            if(fila[5]=="1"){
+            if (fila[5] == "1") {
                 String horarioNombre = obtenerNombreHorario(fila[4]);
-            String estado = "Activo";
-            System.out.printf("%s %12s %25s %18s %12s", fila[1], fila[2],
-                    fila[3], horarioNombre,estado);
-            System.out.println("");
+                String estado = "Activo";
+                System.out.printf("%s %12s %25s %18s %12s", fila[1], fila[2],
+                        fila[3], horarioNombre, estado);
+                System.out.println("");
             }
-            
+
         }
     }
 
@@ -97,29 +97,58 @@ public class EmpleadoService {
 
         return maxCorrelativo + 1;
     }
-    
-     public int obtenerSiguienteIdEmpleado() {
-        int mayorIdEmpleado=Integer.parseInt(datosEmpleado[0][0]);
+
+    public int obtenerSiguienteIdEmpleado() {
+        int mayorIdEmpleado = Integer.parseInt(datosEmpleado[0][0]);
         for (String[] fila : datosEmpleado) {
-            if(mayorIdEmpleado< Integer.parseInt(fila[0].toString())){
-                mayorIdEmpleado=Integer.parseInt(fila[0].toString());
-            } 
+            if (mayorIdEmpleado < Integer.parseInt(fila[0].toString())) {
+                mayorIdEmpleado = Integer.parseInt(fila[0].toString());
+            }
         }
         return mayorIdEmpleado + 1;
     }
-     
-    public void registrarEmpleado(Empleado empleado ){        
-        String[][] nuevaMatriz = new String[datosEmpleado.length + 1][5];        
-        for(int i = 0; i < datosEmpleado.length; i++) {
+
+    public void registrarEmpleado(Empleado empleado) {
+        String[][] nuevaMatriz = new String[datosEmpleado.length + 1][5];
+        for (int i = 0; i < datosEmpleado.length; i++) {
             nuevaMatriz[i] = datosEmpleado[i];
         }
         nuevaMatriz[nuevaMatriz.length - 1] = new String[]{
-            String.valueOf(empleado.getIdEmpleado()), 
-            empleado.getCodigo(), 
-            empleado.getNombre(), 
-            empleado.getApellido(), 
-            String.valueOf(empleado.getIdHorario())};
-        
+            String.valueOf(empleado.getIdEmpleado()),
+            empleado.getCodigo(),
+            empleado.getNombre(),
+            empleado.getApellido(),
+            String.valueOf(empleado.getIdHorario()),
+            empleado.getIdEstado()};
+
         datosEmpleado = nuevaMatriz;
     }
+
+    public boolean editarEmpleadoPorCodigo(String codigo,
+            String nuevoNombre, String nuevoApellido) {
+        for (int i = 0; i < datosEmpleado.length; i++) {
+            if (datosEmpleado[i][1] != null && datosEmpleado[i][1].equals(codigo)) {
+                // Columna 2 = nombre -> solo se edita si no viene vacío
+                if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
+                    datosEmpleado[i][2] = nuevoNombre;
+                }
+                // Columna 3 = apellido -> solo se edita si no viene vacío
+                if (nuevoApellido != null && !nuevoApellido.trim().isEmpty()) {
+                    datosEmpleado[i][3] = nuevoApellido;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existeCodigo(String codigo) {
+        for (int i = 0; i < datosEmpleado.length; i++) {
+            if (datosEmpleado[i][1] != null && datosEmpleado[i][1].equals(codigo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
